@@ -13,7 +13,7 @@ class TodosController {
             if(todo) {
                 res.status(200).json(todo);
             } else {
-                res.status(400).json({msg: "Todo not found"});
+                res.status(404).json({msg: "Todo not found"});
             }
         }).catch(next);
     }
