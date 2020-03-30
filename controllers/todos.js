@@ -13,7 +13,7 @@ class TodosController {
             if(todo) {
                 res.status(200).json(todo);
             } else {
-                res.status(404).json({msg: "Todo not found"});
+                res.status(404).json({message: "Todo not found"});
             }
         }).catch(next);
     }
@@ -36,7 +36,7 @@ class TodosController {
             if(editedTodo) {
                 res.status(200).json(editedTodo);
             } else {
-                res.status(404).json({msg: "Todo not found"});
+                res.status(404).json({message: "Todo not found"});
             }
         }).catch(next);
     }
@@ -53,7 +53,7 @@ class TodosController {
             if(foundTodo) {
                 res.status(200).json(foundTodo);
             } else {
-                res.status(404).json({msg: "Todo not found"});
+                res.status(404).json({message: "Todo not found"});
             }
         }).catch(next);
     }
