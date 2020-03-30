@@ -8,6 +8,7 @@ todosRouter.get('/', TodosController.list);
 todosRouter.get('/:id', TodosController.getById);
 todosRouter.post('/', TodosController.add);
 todosRouter.put('/:id', TodosController.edit);
+todosRouter.delete('/:id', TodosController.delete);
 todosRouter.use(validationHandler);
 todosRouter.use(errorHandler);
 

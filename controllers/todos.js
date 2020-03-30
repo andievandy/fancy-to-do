@@ -40,6 +40,23 @@ class TodosController {
             }
         }).catch(next);
     }
+
+    static delete(req, res, next) {
+        let id = req.params.id;
+        let foundTodo = null;
+        Todo.findByPk(id).then(todo => {
+            if(todo) {
+                foundTodo = todo;
+                return todo.destroy();
+            }
+        }).then(() => {
+            if(foundTodo) {
+                res.status(200).json(foundTodo);
+            } else {
+                res.status(404).json({msg: "Todo not found"});
+            }
+        }).catch(next);
+    }
 }
 
 module.exports = TodosController;
