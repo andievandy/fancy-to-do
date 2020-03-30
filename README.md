@@ -13,6 +13,9 @@ A simple to-do app created in node.js, express, postgres. It supports RESTful en
 Get the list of all to-dos
 
 ### Response
+
+#### 200 OK
+
 ```json
 [
     {
@@ -54,7 +57,9 @@ Get the specific to-do item
 | :--: | :------------------: |
 |  id  | ID of the to-do item |
 
-### Response
+### Responses
+
+#### 200 OK
 
 Returns data of the to-dos
 
@@ -67,6 +72,14 @@ Returns data of the to-dos
     "due_date": "2020-04-10T17:00:00.000Z",
     "createdAt": "2020-03-30T06:27:59.739Z",
     "updatedAt": "2020-03-30T07:48:47.349Z"
+}
+```
+
+#### 404 NOT FOUND
+
+```json
+{
+    "message": "Todo not found"
 }
 ```
 
@@ -92,7 +105,9 @@ Add new to-do item
 }
 ```
 
-### Response
+### Responses
+
+#### 201 CREATED
 
 Returns data of the created to-do item
 
@@ -105,6 +120,22 @@ Returns data of the created to-do item
     "due_date": "2020-01-01T00:00:00.000Z",
     "updatedAt": "2020-03-30T08:50:56.721Z",
     "createdAt": "2020-03-30T08:50:56.721Z"
+}
+```
+
+#### 400 BAD REQUEST
+
+Usually returns validation errors
+
+```json
+{
+    "message": [
+        "title is empty",
+        "description is empty",
+        "status is empty",
+        "due_date is empty",
+        "due_date must be in date format: YYYY-MM-DD"
+    ]
 }
 ```
 
@@ -136,7 +167,9 @@ Edit specific to-do item
 }
 ```
 
-### Response
+### Responses
+
+#### 200 OK
 
 Returns updated data of the edited to-do item
 
@@ -152,6 +185,30 @@ Returns updated data of the edited to-do item
 }
 ```
 
+#### 400 BAD REQUEST
+
+Usually returns validation errors
+
+```json
+{
+    "message": [
+        "title is empty",
+        "description is empty",
+        "status is empty",
+        "due_date is empty",
+        "due_date must be in date format: YYYY-MM-DD"
+    ]
+}
+```
+
+#### 404 NOT FOUND
+
+```json
+{
+    "message": "Todo not found"
+}
+```
+
 ## DELETE /todos/[id]
 
 Delete specific to-do item
@@ -161,7 +218,9 @@ Delete specific to-do item
 | :--: | :------------------: |
 |  id  | ID of the to-do item |
 
-### Response
+### Responses
+
+#### 200 OK
 
 Returns data of the deleted to-do item
 
@@ -176,3 +235,10 @@ Returns data of the deleted to-do item
     "createdAt": "2020-03-30T08:50:56.721Z"
 }
 ```
+
+#### 404 NOT FOUND
+
+```json
+{
+    "message": "Todo not found"
+}
