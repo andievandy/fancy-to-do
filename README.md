@@ -1,14 +1,14 @@
 # fancy-to-do
-A simple to-do API created in node.js, express, postgres.
+A simple to-do app created in node.js, express, postgres. It supports RESTful endpoint to do CRUD actions on to-do item and returns JSON formatted response.
 
-# Available Endpoints
+# Available REST Endpoints
 - [GET /todos](#get-todos)
 - [GET /todos/[id]](#get-todosid)
 - [POST /todos](#post-todos)
 - [PUT /todos/[id]](#put-todosid)
 - [DELETE /todos[id]](#delete-todosid)
 
-## GET /todos 
+## GET /todos
 
 Get the list of all to-dos
 
