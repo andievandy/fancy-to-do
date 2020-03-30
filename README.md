@@ -2,13 +2,13 @@
 A simple to-do API created in node.js, express, postgres.
 
 # Available Endpoints
-- [GET /todos](#GET /todos)
-- [GET /todos/[id]](#GET /todos/[id])
-- [POST /todos](#POST /todos)
-- [PUT /todos/[id]](#PUT /todos/[id])
-- [DELETE /todos[id]](#DELETE /todos[id])
+- [GET /todos](#get-todos)
+- [GET /todos/[id]](#get-todosid)
+- [POST /todos](#post-todos)
+- [PUT /todos/[id]](#put-todosid)
+- [DELETE /todos[id]](#delete-todosid)
 
-## GET /todos
+## GET /todos 
 
 Get the list of all to-dos
 
