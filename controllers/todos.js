@@ -24,6 +24,22 @@ class TodosController {
             res.status(201).json(todo);
         }).catch(next);
     }
+
+    static edit(req, res, next) {
+        let id = req.params.id;
+        let {title, description, status, due_date} = req.body;
+        Todo.findByPk(id).then(todo => {
+            if(todo) {
+                return todo.update({title, description, status, due_date});
+            }
+        }).then(editedTodo => {
+            if(editedTodo) {
+                res.status(200).json(editedTodo);
+            } else {
+                res.status(404).json({msg: "Todo not found"});
+            }
+        }).catch(next);
+    }
 }
 
 module.exports = TodosController;
