@@ -5,6 +5,7 @@ const TodosController = require('../controllers/todos');
 const todosRouter = Router();
 
 todosRouter.get('/', TodosController.list);
+todosRouter.post('/', TodosController.add);
 todosRouter.use(validationHandler);
 todosRouter.use(errorHandler);
 
