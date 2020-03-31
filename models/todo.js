@@ -3,7 +3,10 @@ module.exports = (sequelize, DataTypes) => {
   const { Model } = sequelize.Sequelize;
   
   class Todo extends Model {
-
+    getViewablePropertiesToUser() {
+      let {id, title, description, status, due_date} = this;
+      return {id, title, description, status, due_date};
+    }
   }
 
   Todo.init({
