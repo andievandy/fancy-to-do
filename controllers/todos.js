@@ -35,7 +35,7 @@ class TodosController {
             let estimatedDueDate = new Date();
             estimatedDueDate.setDate(estimatedDueDate.getDate() + (3 + Math.floor(response.data.accessibility * 27)));
             return Todo.create({
-                title: `Random task #${response.data.key}`,
+                title: `Random activity #${response.data.key}`,
                 description: response.data.activity,
                 status: 'uncompleted',
                 due_date: field.due_date || estimatedDueDate,

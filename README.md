@@ -318,7 +318,7 @@ Returns data of the created to-do item
 ```json
 {
     "id": 15,
-    "title": "Random task #4708863",
+    "title": "Random activity #4708863",
     "description": "Listen to a new music genre",
     "status": "uncompleted",
     "due_date": "2020-04-03T13:49:10.974Z"
