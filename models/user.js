@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
             where: sequelize.where(sequelize.fn('lower', sequelize.col('email')), value)
           }).then(data => {
             if(data) {
-              next('This E-mail has been registered');
+              next('This E-mail has been registered.');
             } else {
               next();
             }
