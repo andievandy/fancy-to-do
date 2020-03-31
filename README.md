@@ -4,6 +4,7 @@ A simple to-do app created in node.js, express, postgres. It has following featu
 - RESTful endpoint to do CRUD actions on to-do item and returns JSON formatted response.
 - User system, separate to-dos by user
 - Stateless authentication using JSONWebToken
+- Uses [Bored API][https://www.boredapi.com/] to add new random activity to to-do list
 
 # Available REST Endpoints
 - [POST /register](#post-register)
@@ -271,6 +272,66 @@ Usually returns validation errors
         "description is empty",
         "status is empty",
         "due_date is empty",
+        "due_date must be in date format: YYYY-MM-DD"
+    ]
+}
+```
+
+#### 401 UNAUTHORIZED
+
+Happens if you haven't set "accessToken" request header or the token is invalid
+
+```json
+{
+    "errors": "Invalid or missing token"
+}
+```
+
+## POST /todos/random
+
+Add new to-do item with random activity
+
+### Request Header (Optional)
+
+```
+{
+	"Content-Type": "application/json"
+}
+```
+
+### Request Body (Optional)
+
+If omitted, the due date will be calculated by how accessible/possible the activity is ranged from 3 to 30 days
+
+```json
+{
+	"due_date": "2020-01-01"
+}
+```
+
+### Responses
+
+#### 201 CREATED
+
+Returns data of the created to-do item
+
+```json
+{
+    "id": 15,
+    "title": "Random task #4708863",
+    "description": "Listen to a new music genre",
+    "status": "uncompleted",
+    "due_date": "2020-04-03T13:49:10.974Z"
+}
+```
+
+#### 400 BAD REQUEST
+
+Usually returns validation errors
+
+```json
+{
+    "errors": [
         "due_date must be in date format: YYYY-MM-DD"
     ]
 }
