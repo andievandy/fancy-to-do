@@ -34,7 +34,7 @@ class UsersController {
             }
         }).then(token => {
             if(token) {
-                res.status(201).json(token);
+                res.status(201).json({accessToken: token});
             } else {
                 res.status(400).json({errors: 'Invalid Username/Password'});
             }
