@@ -8,7 +8,13 @@ function authentication(req, res, next) {
         req.userEmail = payload.userEmail;
         next();
     } catch(err) {
-        res.status(401).send({errors: 'Invalid or missing token'});
+        if(err instanceof jwt.JsonWebTokenError || err instanceof jwt.NotBeforeError) {
+            res.status(401).send({errors: 'Invalid or missing token'});
+        } else if(err instanceof jwt.TokenExpiredError) {
+            res.status(401).send({errors: 'Token expired'});
+        } else {
+            next(err);
+        }
     }
 }
 
