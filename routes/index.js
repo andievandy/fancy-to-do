@@ -5,7 +5,7 @@ const todosRouter = require('./todos');
 const mainRouter = Router();
 
 mainRouter.use('/todos', todosRouter);
-todosRouter.use(validationHandler);
-todosRouter.use(errorHandler);
+mainRouter.use(validationHandler);
+mainRouter.use(errorHandler);
 
 module.exports = mainRouter;
