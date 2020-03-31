@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: 'email is required.'
         },
+        isEmail: {
+          msg: 'email is not valid.'
+        },
         isUnique: (value, next) => {
           User.findOne({
             where: sequelize.where(sequelize.fn('lower', sequelize.col('email')), value)
