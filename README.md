@@ -4,7 +4,7 @@ A simple to-do app created in node.js, express, postgres. It has following featu
 - RESTful endpoint to do CRUD actions on to-do item and returns JSON formatted response.
 - User system, separate to-dos by user
 - Stateless authentication using JSONWebToken
-- Uses [Bored API][https://www.boredapi.com/] to add new random activity to to-do list
+- Uses [Bored API](https://www.boredapi.com/) to add new random activity to to-do list
 
 # Available REST Endpoints
 - [POST /register](#post-register)
