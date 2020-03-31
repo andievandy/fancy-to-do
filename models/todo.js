@@ -1,6 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Todo = sequelize.define('Todo', {
+  const { Model } = sequelize.Sequelize;
+  
+  class Todo extends Model {
+
+  }
+
+  Todo.init({
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -52,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     }
-  }, {});
+  }, { sequelize });
   Todo.associate = function(models) {
     Todo.belongsTo(models.User);
   };

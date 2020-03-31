@@ -1,7 +1,13 @@
 'use strict';
 const { hashPassword } = require('../helpers/password');
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const { Model } = sequelize.Sequelize;
+  
+  class User extends Model {
+
+  }
+
+  User.init({
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -43,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
+    sequelize,
     hooks: {
       beforeValidate: (user, options) => {
         user.email = user.email.toLowerCase();
