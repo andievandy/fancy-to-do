@@ -1,4 +1,5 @@
 const { Todo } = require('../models');
+const axios = require('axios');
 
 class TodosController {
     static list(req, res, next) {
@@ -24,6 +25,23 @@ class TodosController {
     static add(req, res, next) {
         let {title, description, status, due_date} = req.body;
         Todo.create({title, description, status, due_date, UserId: req.userId}).then(todo => {
+            res.status(201).json(todo.getViewablePropertiesToUser());
+        }).catch(next);
+    }
+
+    static addRandom(req, res, next) {
+        axios.get('https://www.boredapi.com/api/activity/').then((response) => {
+            let field = req.body;
+            let estimatedDueDate = new Date();
+            estimatedDueDate.setDate(estimatedDueDate.getDate() + (3 + Math.floor(response.data.accessibility * 27)));
+            return Todo.create({
+                title: `Random task #${response.data.key}`,
+                description: response.data.activity,
+                status: 'uncompleted',
+                due_date: field.due_date || estimatedDueDate,
+                UserId: req.userId
+            });
+        }).then(todo => {
             res.status(201).json(todo.getViewablePropertiesToUser());
         }).catch(next);
     }

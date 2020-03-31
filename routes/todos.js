@@ -9,6 +9,7 @@ todosRouter.use(authentication, checkUserExists);
 todosRouter.get('/', TodosController.list);
 todosRouter.get('/:id', todoHandler, TodosController.getById);
 todosRouter.post('/', TodosController.add);
+todosRouter.post('/random', TodosController.addRandom);
 todosRouter.put('/:id', todoHandler, TodosController.edit);
 todosRouter.delete('/:id', todoHandler, TodosController.delete);
 
