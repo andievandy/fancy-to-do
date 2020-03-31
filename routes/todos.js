@@ -1,4 +1,4 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const TodosController = require('../controllers/todos');
 const todosRouter = Router();
 
