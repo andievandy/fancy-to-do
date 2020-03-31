@@ -14,9 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         isUnique: (value, next) => {
           User.findOne({
-            where: {
-              email: value
-            }
+            where: sequelize.where(sequelize.fn('lower', sequelize.col('email')), value)
           }).then(data => {
             if(data) {
               next('This E-mail has been registered');
@@ -43,6 +41,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     hooks: {
+      beforeValidate: (user, options) => {
+        user.email = user.email.toLowerCase();
+      },
       beforeCreate: (user, options) => {
         user.password = hashPassword(user.password);
       },
