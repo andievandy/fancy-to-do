@@ -1,16 +1,125 @@
 # fancy-to-do
-A simple to-do app created in node.js, express, postgres. It supports RESTful endpoint to do CRUD actions on to-do item and returns JSON formatted response.
+A simple to-do app created in node.js, express, postgres. It has following features:
+
+- RESTful endpoint to do CRUD actions on to-do item and returns JSON formatted response.
+- User system, separate to-dos by user
+- Stateless authentication using JSONWebToken
 
 # Available REST Endpoints
+- [POST /register](#post-register)
+- [POST /login](#post-login)
 - [GET /todos](#get-todos)
 - [GET /todos/[id]](#get-todosid)
 - [POST /todos](#post-todos)
 - [PUT /todos/[id]](#put-todosid)
 - [DELETE /todos[id]](#delete-todosid)
 
+## POST /register
+
+Registers a new account
+
+### Request Header
+```
+{
+	"Content-Type": "application/json"
+}
+```
+
+### Request Body
+
+```json
+{
+	"email": "email@example.com",
+	"password": "passwordhere"
+}
+```
+
+### Responses
+
+#### 200 OK
+
+```json
+{
+    "id": 9,
+    "email": "me@localhost.com",
+    "password": "test"
+}
+```
+
+#### 400 BAD REQUEST
+
+Happens when the validation doesn't pass or the e-mail has been registered
+
+```json
+{
+    "errors": [
+        "This E-mail has been registered."
+    ]
+}
+```
+
+```json
+{
+    "errors": [
+        "password is required.",
+        "email is required.",
+        "email is not valid."
+    ]
+}
+```
+
+## POST /login
+
+Logs in to an account to access to-do item
+
+### Request Header
+```
+{
+	"Content-Type": "application/json"
+}
+```
+
+### Request Body
+
+```json
+{
+	"email": "email@example.com",
+	"password": "passwordhere"
+}
+```
+
+### Responses
+
+#### 200 OK
+
+Returns an access token that you can use to access the to-do item
+
+```json
+{
+    "accessToken": "[ACCESS TOKEN HERE]"
+}
+```
+
+#### 400 BAD REQUEST
+
+Happens when the password or e-mail entered is not valid
+
+```json
+{
+    "errors": "Invalid Username/Password"
+}
+```
+
 ## GET /todos
 
-Get the list of all to-dos
+Get the list of all to-dos created by logged in user
+
+### Request Header
+```
+{
+	"accessToken": "ACCESS TOKEN HERE"
+}
+```
 
 ### Response
 
@@ -23,39 +132,50 @@ Get the list of all to-dos
         "title": "Todo 1",
         "description": "Todo List 1",
         "status": "uncompleted",
-        "due_date": "2020-04-10T17:00:00.000Z",
-        "createdAt": "2020-03-30T06:27:59.739Z",
-        "updatedAt": "2020-03-30T07:48:47.349Z"
+        "due_date": "2020-04-10T17:00:00.000Z"
     },
     {
         "id": 2,
         "title": "Todo 2",
         "description": "Todo List 2",
         "status": "uncompleted",
-        "due_date": "2020-04-14T17:00:00.000Z",
-        "createdAt": "2020-03-30T06:28:34.382Z",
-        "updatedAt": "2020-03-30T06:28:34.382Z"
+        "due_date": "2020-04-14T17:00:00.000Z"
     },
     {
         "id": 3,
         "title": "Todo 3",
         "description": "Todo List 3",
         "status": "completed",
-        "due_date": "2020-04-18T17:00:00.000Z",
-        "createdAt": "2020-03-30T06:45:37.418Z",
-        "updatedAt": "2020-03-30T06:45:37.418Z"
+        "due_date": "2020-04-18T17:00:00.000Z"
     }
 ]
 ```
 
+#### 401 UNAUTHORIZED
+
+Happens if you haven't set "accessToken" request header or the token is invalid
+
+```json
+{
+    "errors": "Invalid or missing token"
+}
+```
+
 ## GET /todos/[id]
 
-Get the specific to-do item
+Get the specific to-do item. Only can access todo item created by logged in user.
 
 ### Parameters
 | Name |     Description      |
 | :--: | :------------------: |
 |  id  | ID of the to-do item |
+
+### Request Header
+```
+{
+	"accessToken": "ACCESS TOKEN HERE"
+}
+```
 
 ### Responses
 
@@ -69,9 +189,27 @@ Returns data of the to-dos
     "title": "Todo 1",
     "description": "Todo List 1",
     "status": "uncompleted",
-    "due_date": "2020-04-10T17:00:00.000Z",
-    "createdAt": "2020-03-30T06:27:59.739Z",
-    "updatedAt": "2020-03-30T07:48:47.349Z"
+    "due_date": "2020-04-10T17:00:00.000Z"
+}
+```
+
+#### 401 UNAUTHORIZED
+
+Happens if you haven't set "accessToken" request header or the token is invalid
+
+```json
+{
+    "errors": "Invalid or missing token"
+}
+```
+
+#### 403 FORBIDDEN
+
+Happens if you access other user to-do item
+
+```json
+{
+    "errors": "You are not authorized to access this item"
 }
 ```
 
@@ -79,7 +217,7 @@ Returns data of the to-dos
 
 ```json
 {
-    "message": "Todo not found"
+    "errors": "Todo not found"
 }
 ```
 
@@ -90,7 +228,8 @@ Add new to-do item
 ### Request Header
 ```
 {
-	"Content-Type": "application/json"
+	"Content-Type": "application/json",
+	"accessToken": "ACCESS TOKEN HERE"
 }
 ```
 
@@ -117,9 +256,7 @@ Returns data of the created to-do item
     "title": "Todo Title",
     "description": "Descriptions here",
     "status": "uncompleted",
-    "due_date": "2020-01-01T00:00:00.000Z",
-    "updatedAt": "2020-03-30T08:50:56.721Z",
-    "createdAt": "2020-03-30T08:50:56.721Z"
+    "due_date": "2020-01-01T00:00:00.000Z"
 }
 ```
 
@@ -129,7 +266,7 @@ Usually returns validation errors
 
 ```json
 {
-    "message": [
+    "errors": [
         "title is empty",
         "description is empty",
         "status is empty",
@@ -139,10 +276,19 @@ Usually returns validation errors
 }
 ```
 
+#### 401 UNAUTHORIZED
+
+Happens if you haven't set "accessToken" request header or the token is invalid
+
+```json
+{
+    "errors": "Invalid or missing token"
+}
+```
 
 ## PUT /todos/[id]
 
-Edit specific to-do item
+Edit specific to-do item. Only can access todo item created by logged in user.
 
 ### Parameters
 | Name |     Description      |
@@ -152,7 +298,8 @@ Edit specific to-do item
 ### Request Header
 ```
 {
-	"Content-Type": "application/json"
+	"Content-Type": "application/json",
+	"accessToken": "ACCESS TOKEN HERE"
 }
 ```
 
@@ -179,9 +326,7 @@ Returns updated data of the edited to-do item
     "title": "Todo Title",
     "description": "Descriptions here",
     "status": "uncompleted",
-    "due_date": "2020-01-01T00:00:00.000Z",
-    "updatedAt": "2020-03-30T08:50:56.721Z",
-    "createdAt": "2020-03-30T08:50:56.721Z"
+    "due_date": "2020-01-01T00:00:00.000Z"
 }
 ```
 
@@ -191,7 +336,7 @@ Usually returns validation errors
 
 ```json
 {
-    "message": [
+    "errors": [
         "title is empty",
         "description is empty",
         "status is empty",
@@ -201,22 +346,49 @@ Usually returns validation errors
 }
 ```
 
+#### 401 UNAUTHORIZED
+
+Happens if you haven't set "accessToken" request header or the token is invalid
+
+```json
+{
+    "errors": "Invalid or missing token"
+}
+```
+
+#### 403 FORBIDDEN
+
+Happens if you access other user to-do item
+
+```json
+{
+    "errors": "You are not authorized to access this item"
+}
+```
+
 #### 404 NOT FOUND
 
 ```json
 {
-    "message": "Todo not found"
+    "errors": "Todo not found"
 }
 ```
 
 ## DELETE /todos/[id]
 
-Delete specific to-do item
+Delete specific to-do item. Only can access todo item created by logged in user.
 
 ### Parameters
 | Name |     Description      |
 | :--: | :------------------: |
 |  id  | ID of the to-do item |
+
+### Request Header
+```
+{
+	"accessToken": "ACCESS TOKEN HERE"
+}
+```
 
 ### Responses
 
@@ -230,9 +402,27 @@ Returns data of the deleted to-do item
     "title": "Todo Title",
     "description": "Descriptions here",
     "status": "uncompleted",
-    "due_date": "2020-01-01T00:00:00.000Z",
-    "updatedAt": "2020-03-30T08:50:56.721Z",
-    "createdAt": "2020-03-30T08:50:56.721Z"
+    "due_date": "2020-01-01T00:00:00.000Z"
+}
+```
+
+#### 401 UNAUTHORIZED
+
+Happens if you haven't set "accessToken" request header or the token is invalid
+
+```json
+{
+    "errors": "Invalid or missing token"
+}
+```
+
+#### 403 FORBIDDEN
+
+Happens if you access other user to-do item
+
+```json
+{
+    "errors": "You are not authorized to access this item"
 }
 ```
 
@@ -240,5 +430,7 @@ Returns data of the deleted to-do item
 
 ```json
 {
-    "message": "Todo not found"
+    "errors": "Todo not found"
 }
+```
+
