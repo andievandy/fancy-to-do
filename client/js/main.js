@@ -101,6 +101,22 @@ $('#btnAddTodo').click(function() {
     showSection('todoinput');
 });
 
+$('#btnAddRandomTodo').click(function() {
+    $.ajax({
+        url: `http://localhost:3000/todos/random`,
+        method: 'POST',
+        headers: {
+            accessToken: localStorage.getItem('accessToken')
+        }
+    }).done(function() {
+        getTodoList();
+        showSection('todolist');
+        showMessage('Add random to-do successful');
+    }).fail(function(data) {
+        showMessage(`Add random to-do failed: ${data.responseJSON.errors}`);
+    });
+});
+
 $('#todoInputForm').submit(function(e) {
     e.preventDefault();
     let title = $('#inputTodoTitle').val();
@@ -243,7 +259,6 @@ function checkLoginState() {
         $('.navRegister').hide();
         $('.navLogin').hide();
         $('.navLogout').show();
-        $('.fixed-action-btn').show();
     } else {
         showSection('login');
         $('.navRegister').show();
@@ -258,7 +273,13 @@ function showSection(page) {
     $('#sectionRegister').hide();
     $('#sectionTodoList').hide();
     $('#sectionTodoInput').hide();
-    switch(page.toLowerCase()) {
+    page = page.toLowerCase();
+    if(page === 'todolist') {
+        $('.fixed-action-btn').show();
+    } else {
+        $('.fixed-action-btn').hide();
+    }
+    switch(page) {
         case 'login':
             $('#sectionLogin').show();
             break;
