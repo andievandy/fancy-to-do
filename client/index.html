@@ -7,6 +7,7 @@
     <title>Fancy Todo App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -62,10 +63,48 @@
         <section id="sectionTodoList">
             <h1>Todo List</h1>
             <div id="todoList" class="row">
+                <div class="todo-sizer"></div>
             </div>
         </section>
+        <section id="sectionTodoInput">
+            <h1>Input Todo</h1>
+            <form id="todoInputForm">
+                <div class="input-field">
+                    <label for="inputTodoTitle">Title</label>
+                    <input type="text" id="inputTodoTitle">
+                </div>
+                <div class="input-field">
+                    <label for="inputTodoDescription">Description</label>
+                    <textarea id="inputTodoDescription" class="materialize-textarea"></textarea>
+                </div>
+                <div class="input-field">
+                    <label for="inputTodoStatus">Status</label>
+                    <input type="text" id="inputTodoStatus">
+                </div>
+                <div class="input-field">
+                    <label for="inputTodoDueDate">Due Date</label>
+                    <input type="text" class="datepicker" id="inputTodoDueDate">
+                </div>
+                <button class="waves-effect waves-light btn" type="submit">Save</button>
+                <button class="waves-effect waves-light btn" id="btnTodoInputCancel">Cancel</button>
+            </form>
+        </section>
     </div>
-
+    <div class="fixed-action-btn">
+        <a id="btnAddTodo" class="btn-floating btn-large red">
+          <i class="large material-icons">add</i>
+        </a>
+      </div>
+    <div id="modalDelete" class="modal">
+        <div class="modal-content">
+            <h4>Delete Confirmation</h4>
+            <p>Are you sure you want to delete this item?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="modalDeleteYes" class="waves-effect waves-green btn-flat">Yes</a>
+            <a href="#!" id="modalDeleteNo" class="waves-effect waves-green btn-flat">No</a>
+        </div>
+    </div>
     <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/main.js"></script>
