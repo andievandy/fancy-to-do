@@ -1,40 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <title>Fancy Todo App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <div class="message"></div>
-        <h1>Register</h1>
-        <form id="registerForm">
-            <label for="registerEmail">E-mail</label>
-            <input type="email" id="registerEmail">
-            <label for="registerPassword">Password</label>
-            <input type="password" id="registerPassword">
-            <button type="submit">Register</button>
-        </form>
-        <h1>Login</h1>
-        <form id="loginForm">
-            <label for="loginEmail">E-mail</label>
-            <input type="email" id="loginEmail">
-            <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword">
-            <button type="submit">Login</button>
-        </form>
-        <button id="btnLogout">Logout</button>
-        <h1>Todo List</h1>
-        <button id="btnGetTodoList">Get List</button>
-        <div id="todoList">
 
-        </div>    
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <div class="row">
+                <div class="col s12">
+                    <a href="#" class="brand-logo">Todo</a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="#" class="navLogin">Login</a></li>
+                        <li><a href="#" class="navRegister">Register</a></li>
+                        <li><a href="#" class="navLogout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="#" class="navLogin">Login</a></li>
+        <li><a href="#" class="navRegister">Register</a></li>
+        <li><a href="#" class="navLogout">Logout</a></li>
+    </ul>
+    <div class="container">
+        <section id="sectionRegister">
+            <h1>Register</h1>
+            <form id="registerForm">
+                <div class="input-field">
+                    <label for="registerEmail">E-mail</label>
+                    <input type="email" id="registerEmail">
+                </div>
+                <div class="input-field">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword">
+                </div>
+                <button class="waves-effect waves-light btn" type="submit">Register</button>
+            </form>
+        </section>
+        <section id="sectionLogin">
+            <h1>Login</h1>
+            <form id="loginForm">
+                <div class="input-field">
+                    <label for="loginEmail">E-mail</label>
+                    <input type="email" id="loginEmail">
+                </div>
+                <div class="input-field">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword">
+                </div>
+                <button class="waves-effect waves-light btn" type="submit">Login</button>
+            </form>
+        </section>
+        <section id="sectionTodoList">
+            <h1>Todo List</h1>
+            <div id="todoList" class="row">
+            </div>
+        </section>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>
