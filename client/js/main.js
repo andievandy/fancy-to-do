@@ -55,9 +55,12 @@ $('#registerForm').submit(function(e) {
 });
 
 $('.navLogout').click(function() {
-    localStorage.removeItem('accessToken');
-    $('#todoList').empty();
-    checkLoginState();
+    let auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        localStorage.removeItem('accessToken');
+        $('#todoList').empty();
+        checkLoginState();
+    });
 });
 
 $('#btnGetTodoList').click(function() {
@@ -302,4 +305,26 @@ function showSection(page) {
 
 function showMessage(str) {
     M.toast({html: str});
+}
+
+function onSignIn(googleUser) {
+    if(!localStorage.getItem('accessToken')) {
+        let id_token = googleUser.getAuthResponse().id_token;
+        $.ajax({
+            url: 'http://localhost:3000/google-sign-in',
+            method: 'POST',
+            data: {
+                idToken: id_token
+            }
+        }).done(function(data) {
+            localStorage.setItem('accessToken', data.accessToken);
+            $('#registerEmail').val('');
+            $('#registerPassword').val('');
+            checkLoginState();
+            getTodoList();
+            showMessage('Login successful');
+        }).fail(function(err) {
+            showMessage(`Login failed: ${err.responseJSON.errors}`);
+        });
+    }
 }
