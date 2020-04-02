@@ -1,4 +1,5 @@
 let selectedTodoId = null;
+let selectedTodoCard = null;
 let inputEditMode = false;
 
 $(document).ready(function() {
@@ -76,7 +77,8 @@ $('.navLogin').click(function() {
 });
 
 $(document).on('click', '.btnTodoEdit', function(e) {
-    let todoId = $(this).parent().parent().data('id');
+    let todoCard = $(this).parent().parent();
+    let todoId = selectedTodoCard.data('id');
     $.ajax({
         url: `http://localhost:3000/todos/${todoId}`,
         method: 'GET',
@@ -84,6 +86,7 @@ $(document).on('click', '.btnTodoEdit', function(e) {
             accessToken: localStorage.getItem('accessToken')
         }
     }).done(function(data) {
+        selectedTodoCard = todoCard;
         selectedTodoId = todoId;
         inputEditMode = true;
         $('#inputTodoTitle').val(data.title);
@@ -171,7 +174,8 @@ $('#todoInputForm').submit(function(e) {
 
 $(document).on('click', '.btnTodoDelete', function(e) {
     e.preventDefault();
-    selectedTodoId = $(this).parent().parent().data('id');
+    selectedTodoCard = $(this).parent().parent();
+    selectedTodoId = selectedTodoCard.data('id');
     M.Modal.getInstance($('#modalDelete')).open();
 });
 
@@ -185,7 +189,10 @@ $('#modalDeleteYes').click(function(e) {
             accessToken: localStorage.getItem('accessToken')
         }
     }).done(function() {
-        getTodoList();
+        selectedTodoCard.addClass('scale-out');
+        setInterval(function(target) {
+            target.remove();
+        }, 250, selectedTodoCard);
         showMessage(`Delete to-do successful`);
     }).fail(function(err) {
         showMessage(`Delete to-do failed: ${err.responseJSON.errors}`);
@@ -210,6 +217,7 @@ function resetTodoInputForm() {
     $('#inputTodoDueDate').val('');
     M.updateTextFields();
     selectedTodoId = null;
+    selectedTodoCard = null;
     inputEditMode = false;
 }
 
