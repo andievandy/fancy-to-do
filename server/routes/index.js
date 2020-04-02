@@ -8,6 +8,7 @@ const mainRouter = Router();
 mainRouter.use('/todos', todosRouter);
 mainRouter.post('/register', UsersController.register);
 mainRouter.post('/login', UsersController.login);
+mainRouter.post('/google-sign-in', UsersController.loginWithGoogle);
 mainRouter.use(validationHandler);
 mainRouter.use(errorHandler);
 
