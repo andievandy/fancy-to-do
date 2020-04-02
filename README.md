@@ -5,6 +5,9 @@ A simple to-do app created in node.js, express, postgres. It has following featu
 - User system, separate to-dos by user
 - Stateless authentication using JSONWebToken
 - Uses [Bored API](https://www.boredapi.com/) to add new random activity to to-do list
+- Uses Google Sign-In for Websites to log in with Google Account
+
+The client is a Single Page App created in HTML, CSS, and JavaScript using Materialize and jQuery
 
 # Available REST Endpoints
 - [POST /register](#post-register)
@@ -37,7 +40,7 @@ Registers a new account
 
 ### Responses
 
-#### 200 OK
+#### 201 CREATED
 
 ```json
 {
@@ -91,7 +94,7 @@ Logs in to an account to access to-do item
 
 ### Responses
 
-#### 200 OK
+#### 201 CREATED
 
 Returns an access token that you can use to access the to-do item
 
