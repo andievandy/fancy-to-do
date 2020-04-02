@@ -108,6 +108,7 @@ $('#btnAddTodo').click(function() {
 });
 
 $('#btnAddRandomTodo').click(function() {
+    showSection('preloader');
     $.ajax({
         url: `http://localhost:3000/todos/random`,
         method: 'POST',
@@ -284,6 +285,7 @@ function showSection(page) {
     $('#sectionRegister').hide();
     $('#sectionTodoList').hide();
     $('#sectionTodoInput').hide();
+    $('#sectionPreloader').hide();
     page = page.toLowerCase();
     if(page === 'todolist') {
         $('.fixed-action-btn').show();
@@ -307,6 +309,9 @@ function showSection(page) {
                 $('#sectionTodoInput > h1').text('Add Todo');
             }
             $('#sectionTodoInput').show();
+            break;
+        case 'preloader':
+            $('#sectionPreloader').show();
             break;
     }
 }
