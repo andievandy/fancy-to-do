@@ -36,27 +36,18 @@ class ProjectsController {
     }
 
     static edit(req, res, next) {
-        let id = req.params.id;
-        Project.update({
+        req.project.update({
             name: req.body.name,
             creatorUserId: req.userId
-        }, {
-            where: {
-                id: id
-            }
         }).then(data => {
             res.status(200).json(data);
         }).catch(next);
     }
 
     static delete(req, res, next) {
-        let id = req.params.id;
-        Project.destroy({
-            where: {
-                id: id
-            }
-        }).then(data => {
-            res.status(200).json(data);
+        let deletedProject = req.project;
+        req.project.destroy().then(() => {
+            res.status(200).json(deletedProject);
         }).catch(next);
     }
 }
