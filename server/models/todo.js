@@ -58,6 +58,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         isDate: {
           msg: "due_date must be in date format: YYYY-MM-DD"
+        },
+        isNotPast: (value) => {
+          const currentDate = new Date();
+          const inputDate = new Date(value);
+          if(inputDate.getTime() < currentDate.getTime()) {
+            throw new Error("due_date can't be past date")
+          }
         }
       }
     }
