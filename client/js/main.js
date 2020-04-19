@@ -78,7 +78,7 @@ $('.navLogin').click(function() {
 
 $(document).on('click', '.btnTodoEdit', function(e) {
     let todoCard = $(this).parent().parent();
-    let todoId = selectedTodoCard.data('id');
+    let todoId = todoCard.data('id');
     $.ajax({
         url: `http://localhost:3000/todos/${todoId}`,
         method: 'GET',
